@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- ionicon -->
+     <script
+        type="module"
+        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+
+    <script
+        nomodule
+        src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>Detail KRS</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-6">
+    <div
+    x-data="detailKRS()"
+    x-init="loadData()"
+    class="max-w-5xl mx-auto space-y-4"
+>
+
+    <!-- Loading -->
+    <div
+        x-show="loading"
+        class="bg-white rounded-xl shadow p-6 text-center"
+    >
+        Loading...
+    </div>
+
+    <!-- Error -->
+    <div
+        x-show="error"
+        class="bg-red-100 text-red-700 p-4 rounded-xl"
+        x-text="error"
+    ></div>
+
+    <!-- List Kelas -->
+    <template
+        x-for="kelas in daftarKelas"
+        :key="kelas.kelas.id"
+    >
+
+        <div
+            x-data="{ open: false }"
+            class="bg-white rounded-2xl shadow overflow-hidden"
+        >
+
+            <!-- Header -->
+            <button
+                @click="open = !open"
+                class="w-full p-5 flex items-center justify-between hover:bg-gray-50 transition"
+            >
+
+                <div class="text-left">
+
+                     <div class="flex items-center gap-3">
+
+                        <h2
+                            class="text-lg font-bold text-gray-800"
+                            x-text="kelas.kelas.nama"
+                        ></h2>
+
+                        <span
+                            class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-lg"
+                            x-text="`${kelas.peserta.length} Peserta`"
+                        ></span>
+
+                    </div>
+
+                    <p
+                        class="text-sm text-gray-500 mt-1"
+                    >
+                        <span
+                            x-text="kelas.kelas.mata_kuliah.kode"
+                        ></span>
+
+                        -
+
+                        <span
+                            x-text="kelas.kelas.mata_kuliah.nama"
+                        ></span>
+                    </p>
+
+                </div>
+
+                <div
+                    class="text-gray-500 text-xl"
+                    x-text="open ? '-' : '+'"
+                ></div>
+
+            </button>
+
+            <!-- Peserta -->
+            <div
+                x-show="open"
+                x-transition
+                class="border-t p-5"
+            >
+            <!-- Total Peserta -->
+            <div class="mb-4 flex items-center justify-between">
+
+                <div class="text-sm text-gray-600">
+
+                    Total Peserta:
+
+                    <span
+                        class="font-semibold"
+                        x-text="kelas.peserta.length"
+                    ></span>
+
+                </div>
+
+                <!-- Action -->
+                <div class="flex items-center gap-2" x-data="{ copied: false }">
+
+                    <!-- Copy -->
+                    <button
+                        
+                        @click="
+                            navigator.clipboard.writeText(
+                                [
+                                    'No\tNIM\tNama',
+                                    ...kelas.peserta.map(
+                                        (p, i) => `${i + 1}\t${p.nim}\t${p.nama}`
+                                    )
+                                ].join('\n')
+                            )
+
+                            copied = true
+
+                            setTimeout(() => {
+                                copied = false
+                            }, 2000)
+                        "
+                        class="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+                    >
+                        <ion-icon
+                            name="copy-outline"
+                            class="text-lg"
+                        ></ion-icon>
+                    </button>
+
+                    <!-- Message -->
+                    <p
+                        x-show="copied"
+                        x-transition.opacity
+                        class="text-sm text-green-600 mt-2"
+                    >
+                        Berhasil disalin
+                    </p>
+
+                    <!-- Save -->
+                    <!-- <button
+                        class="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+                    >
+                        <ion-icon
+                            name="save-outline"
+                            class="text-lg"
+                        ></ion-icon>
+                    </button> -->
+
+                    <!-- Download -->
+                    <!-- <button
+                        class="p-2 rounded-lg hover:bg-gray-100 text-gray-600"
+                    >
+                        <ion-icon
+                            name="download-outline"
+                            class="text-lg"
+                        ></ion-icon>
+                    </button> -->
+
+                </div>
+
+            </div>
+
+                <table class="w-full border-collapse">
+
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-2 w-16">
+                                No
+                            </th>
+
+                            <th class="text-left py-2">
+                                NIM
+                            </th>
+
+                            <th class="text-left py-2">
+                                Nama
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <template
+                            x-for="(peserta, index) in kelas.peserta"
+                            :key="peserta.nim"
+                        >
+                            <tr class="border-b last:border-0">
+
+                                <td
+                                    class="py-2"
+                                    x-text="index + 1"
+                                ></td>
+
+                                <td
+                                    class="py-2"
+                                    x-text="peserta.nim"
+                                ></td>
+
+                                <td
+                                    class="py-2"
+                                    x-text="peserta.nama"
+                                ></td>
+
+                            </tr>
+                        </template>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </template>
+
+</div>
+
+    <script>
+      function detailKRS() {
+        return {
+          loading: false,
+
+          error: null,
+
+          daftarKelas: [],
+
+          async loadData() {
+            this.loading = true;
+
+            try {
+              const response = await axios.get(
+                `${window.location.origin}/academic/api/detail/`,
+              );
+
+              this.daftarKelas = response.data;
+            } catch (err) {
+              this.error = "Gagal mengambil data";
+
+              console.error(err);
+            } finally {
+              this.loading = false;
+            }
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
