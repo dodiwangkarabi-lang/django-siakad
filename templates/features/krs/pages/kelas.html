@@ -50,24 +50,33 @@
 
     <!-- List Kelas -->
     <template
-        x-for="kelas in daftarKelas"
-        :key="kelas.kelas.id"
+    x-for="(kelas, index) in daftarKelas"
+    :key="kelas.kelas.id"
+>
+
+    <div
+        x-data="{ open: false }"
+        class="bg-white rounded-2xl shadow overflow-hidden"
     >
 
-        <div
-            x-data="{ open: false }"
-            class="bg-white rounded-2xl shadow overflow-hidden"
+        <!-- Header -->
+        <button
+            @click="open = !open"
+            class="w-full p-5 flex items-center justify-between hover:bg-gray-50 transition"
         >
 
-            <!-- Header -->
-            <button
-                @click="open = !open"
-                class="w-full p-5 flex items-center justify-between hover:bg-gray-50 transition"
-            >
+            <div class="flex items-start gap-4 text-left">
 
-                <div class="text-left">
+                <!-- Nomor -->
+                <div
+                    class="w-10 h-10 shrink-0 rounded-xl bg-gray-100 text-gray-700 font-bold flex items-center justify-center"
+                    x-text="index + 1"
+                ></div>
 
-                     <div class="flex items-center gap-3">
+                <!-- Info Kelas -->
+                <div>
+
+                    <div class="flex items-center gap-2 flex-wrap">
 
                         <h2
                             class="text-lg font-bold text-gray-800"
@@ -81,9 +90,8 @@
 
                     </div>
 
-                    <p
-                        class="text-sm text-gray-500 mt-1"
-                    >
+                    <p class="text-sm text-gray-500 mt-1">
+
                         <span
                             x-text="kelas.kelas.mata_kuliah.kode"
                         ></span>
@@ -93,16 +101,20 @@
                         <span
                             x-text="kelas.kelas.mata_kuliah.nama"
                         ></span>
+
                     </p>
 
                 </div>
 
-                <div
-                    class="text-gray-500 text-xl"
-                    x-text="open ? '-' : '+'"
-                ></div>
+            </div>
 
-            </button>
+            <!-- Toggle -->
+            <div
+                class="text-gray-500 text-xl font-light"
+                x-text="open ? '−' : '+'"
+            ></div>
+
+        </button>
 
             <!-- Peserta -->
             <div
