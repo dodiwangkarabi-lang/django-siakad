@@ -1,8 +1,10 @@
 from academic.constants import *
-from academic.models import MataKuliah
+from academic.models import MataKuliah, KRS, DetailKRS
 from accounts.models import Mahasiswa
 import pandas as pd
 import pickle
+from itertools import product
+from django.db import transaction
 
 def split_ttl(ttl_value):
     """
@@ -178,3 +180,81 @@ def hitung_total_sks(daftar_kode_mata_kuliah):
         >>> hitung_sks(["A001", "A002", "A003"])
     """
     return sum(MataKuliah.objects.filter(kode__in=daftar_kode_mata_kuliah).values_list("sks", flat=True))
+
+
+# def bulk_krs(mahasiswa_ids, kelas_ids, tahun_ajaran, semester):
+#     objs = []
+
+#     for mhs_id, kelas_id in product(mahasiswa_ids, kelas_ids):
+        
+#         try:
+
+#             krs = KRS.objects.get(
+#                 mahasiswa_id=mhs_id,
+#                 tahun_ajaran=tahun_ajaran,
+#                 semester=semester
+#             )
+
+#             objs.append(
+#                 DetailKRS(
+#                     krs=krs,
+#                     kelas_id=kelas_id
+#                 )
+#             )
+#         except:
+#             continue
+
+#     # DetailKRS.objects.bulk_create(
+#     #     objs,
+#     #     ignore_conflicts=True
+#     # )
+
+#     return objs
+
+
+
+def bulk_krs(mahasiswa_ids, kelas_ids, tahun_ajaran, semester):
+    """
+    mahasiswa gabung kelas
+
+    Args:
+        mahasiswa_ids (list): daftar id mahasiswa yang ingin gabung kelas
+        kelas_ids (list): daftar id kelas 
+        tahun_ajaran (str): tahun ajaran misal 2025/2026
+        semester (str): ganjil atau genap
+
+    Returns:
+        objs: daftar object DetailKRS
+        
+    Example:
+        >>> bulk_krs([1, 2, 3], [1, 2, 3], "2025/2026", "ganjil")
+    """
+    objs = []
+
+    for mhs_id, kelas_id in product(mahasiswa_ids, kelas_ids):
+
+        krs = KRS.objects.filter(
+            mahasiswa_id=mhs_id,
+            tahun_ajaran=tahun_ajaran,
+            semester=semester
+        ).first()
+
+        if not krs:
+            continue
+
+        
+        objs.append(
+            DetailKRS(
+                krs=krs,
+                kelas_id=kelas_id
+            )
+        )
+        
+       
+    with transaction.atomic():
+        DetailKRS.objects.bulk_create(
+            objs,
+            ignore_conflicts=True
+        )
+
+    return objs

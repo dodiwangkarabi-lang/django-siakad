@@ -1,9 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from core.forms import FormKRS
-from academic.models import MataKuliah
-from accounts.models import Mahasiswa
 from django.contrib import messages
+
+# models
+from accounts.models import Mahasiswa
+from academic.models import MataKuliah, Kelas
+
+# forms
+from core.forms import FormKRS, FormGabungKelas
+
+# helpers
+from academic.helpers.helpers import bulk_krs
 
 from academic.usecases import IsiKRS
 from academic.services import (
@@ -25,6 +32,39 @@ def index(request):
 
 def kelas(request):
     return render(request, 'features/krs/pages/kelas.html')
+
+@login_required
+def gabung_kelas(request):
+    form = FormGabungKelas()
+    mahasiswa_qs = Mahasiswa.objects.all().order_by("nama")
+    kelas_qs = Kelas.objects.all().order_by("nama")
+    if request.method == "POST":
+        form_data = request.POST.copy()
+        
+        data = {
+            "tahun_ajaran": form_data.get("tahun_ajaran"),
+            "semester": form_data.get("semester"),
+            "mahasiswa_ids": form_data.getlist("daftar_mahasiswa[]"),
+            "kelas_ids": form_data.getlist("daftar_pilihan_kelas[]"),
+        }
+        
+        # print(data)
+        
+        objs = bulk_krs(**data)
+        # print(objs)
+        messages.success(
+            request,
+            f"Jumlah Data : {len(objs)}"
+        )
+        
+        return redirect("core:gabung_kelas")
+    
+    context = {
+        'form': form,
+        'list_kelas': kelas_qs,
+        'list_mahasiswa': mahasiswa_qs
+    }
+    return render(request, 'features/krs/pages/gabung-kelas.html', context)
 
 @login_required
 def krs(request):

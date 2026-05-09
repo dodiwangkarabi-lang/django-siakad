@@ -49,7 +49,7 @@ class Kelas(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.kode} - {self.nama}"
+        return f"{self.pk} - {self.kode} - {self.nama}"
     
 class KRS(models.Model):
     SEMESTER = (
@@ -67,7 +67,7 @@ class KRS(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.tahun_ajaran} - {self.semester}"
+        return f"{self.mahasiswa.nim} - {self.tahun_ajaran} - {self.semester}"
     
 class DetailKRS(models.Model):
     krs = models.ForeignKey(KRS, on_delete=models.CASCADE, null=True, blank=True, related_name="detail")
@@ -80,4 +80,4 @@ class DetailKRS(models.Model):
         unique_together = ['krs', 'kelas']
     
     def __str__(self):
-        return f"{self.krs} - {self.kelas}"
+        return f"{self.krs.mahasiswa.nim} - {self.kelas.mata_kuliah.nama} - {self.krs} - {self.kelas}"

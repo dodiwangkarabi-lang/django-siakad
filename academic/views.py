@@ -57,7 +57,7 @@ class DetailKRSAPIView(APIView):
             .order_by(
                 "kelas__mata_kuliah__nama",
                 "kelas__nama",
-                "krs__mahasiswa__nama"
+                "krs__mahasiswa__nim"
             )
         )
 
