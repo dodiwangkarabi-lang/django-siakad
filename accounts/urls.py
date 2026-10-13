@@ -8,5 +8,9 @@ router.register("mahasiswa", views.MahasiswaViewSet)
 router.register("user", views.UserViewSet)
 
 urlpatterns = [
+    # mahasiswa
+    path("api/mahasiswa/", include("accounts.mahasiswa.api.urls", namespace="accounts_mahasiswa_api")),
+    
     path("api/", include(router.urls)),
+    
 ]

@@ -1,0 +1,167 @@
+<!-- partials/_pengumpulan_tugas_table.html -->
+
+<div
+  x-data="pengumpulanTable()"
+  x-init="loadData()"
+  class="bg-white rounded-xl border border-gray-200 overflow-hidden"
+>
+  <!-- Header -->
+  <div class="flex items-center justify-between p-4 border-b">
+    <div>
+      <h2 class="text-lg font-semibold">Daftar Pengumpulan Tugas</h2>
+
+      <p class="text-sm text-gray-500">
+        Total <span x-text="items.length"></span> pengumpulan
+      </p>
+    </div>
+
+    <button
+      @click="loadData()"
+      class="flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-gray-50"
+    >
+      <ion-icon name="refresh-outline"></ion-icon>
+      Refresh
+    </button>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full">
+      <thead class="bg-gray-50 border-b">
+        <tr class="text-sm text-gray-600">
+          <th class="px-6 py-3 text-left">Tanggal Kirim</th>
+          <th class="px-6 py-3 text-left">File</th>
+          <th class="px-6 py-3 text-left">Catatan</th>
+          <th class="px-6 py-3 text-left">Status</th>
+          <th class="px-6 py-3 text-center">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Loading -->
+        <template x-if="loading">
+          <tr>
+            <td colspan="5" class="py-10 text-center">Memuat data...</td>
+          </tr>
+        </template>
+
+        <!-- Empty -->
+        <template x-if="!loading && items.length === 0">
+          <tr>
+            <td colspan="5" class="py-10 text-center text-gray-500">
+              Belum ada data.
+            </td>
+          </tr>
+        </template>
+
+        <!-- Data -->
+        <template x-for="item in items" :key="item.id">
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4">
+              <span x-text="item.tanggal_kirim"></span>
+            </td>
+
+            <td class="px-6 py-4">
+              <a
+                :href="item.file_url"
+                target="_blank"
+                class="text-blue-600 hover:underline inline-flex items-center gap-2"
+              >
+                <ion-icon name="document-outline"></ion-icon>
+
+                File
+              </a>
+            </td>
+
+            <td class="px-6 py-4">
+              <span x-text="item.catatan || '-'"></span>
+            </td>
+
+            <td class="px-6 py-4">
+              <span
+                class="px-3 py-1 rounded-full text-xs font-medium"
+                :class="statusClass(item.status)"
+                x-text="item.status"
+              ></span>
+            </td>
+
+            <td class="px-6 py-4">
+              <div class="flex justify-center gap-2">
+                <button class="p-2 rounded hover:bg-gray-100">
+                  <ion-icon name="eye-outline"></ion-icon>
+                </button>
+
+                <a
+                  :href="item.file_url"
+                  target="_blank"
+                  class="p-2 rounded hover:bg-gray-100"
+                >
+                  <ion-icon name="download-outline"></ion-icon>
+                </a>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  function pengumpulanTable() {
+    return {
+      loading: false,
+
+      items: [],
+
+      loadData() {
+        this.loading = true;
+
+        setTimeout(() => {
+          this.items = [
+            {
+              id: 1,
+              tanggal_kirim: "05 Jul 2026 08:15",
+              file_url: "#",
+              catatan: "Tugas sudah dikerjakan sesuai instruksi.",
+              status: "DIKUMPULKAN",
+            },
+
+            {
+              id: 2,
+              tanggal_kirim: "05 Jul 2026 09:42",
+              file_url: "#",
+              catatan: "",
+              status: "DRAFT",
+            },
+
+            {
+              id: 3,
+              tanggal_kirim: "04 Jul 2026 15:30",
+              file_url: "#",
+              catatan: "Mohon direvisi apabila masih ada kekurangan.",
+              status: "DIKUMPULKAN",
+            },
+
+            {
+              id: 4,
+              tanggal_kirim: "03 Jul 2026 20:10",
+              file_url: "#",
+              catatan: "File dibatalkan.",
+              status: "DIBATALKAN",
+            },
+          ];
+
+          this.loading = false;
+        }, 700);
+      },
+
+      statusClass(status) {
+        return {
+          "bg-yellow-100 text-yellow-700": status === "DRAFT",
+          "bg-green-100 text-green-700": status === "DIKUMPULKAN",
+          "bg-red-100 text-red-700": status === "DIBATALKAN",
+        };
+      },
+    };
+  }
+</script>

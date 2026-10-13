@@ -1,0 +1,255 @@
+<div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- =====================================
+         Header Kelas
+    ====================================== -->
+    <div class="bg-white rounded-xl shadow border border-gray-200">
+
+        <div class="p-6">
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+                <div class="flex gap-5">
+
+                    <div class="w-20 h-20 rounded-2xl bg-blue-100 flex items-center justify-center">
+                        <ion-icon
+                            name="school-outline"
+                            class="text-5xl text-blue-600"
+                        ></ion-icon>
+                    </div>
+
+                    <div>
+
+                        <h1 class="text-3xl font-bold text-gray-800">
+                            Pemrograman Web
+                        </h1>
+
+                        <p class="text-gray-500 mt-1">
+                            TI-2024-A
+                        </p>
+
+                        <div class="flex flex-wrap gap-5 mt-5 text-sm text-gray-600">
+
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="person-outline"></ion-icon>
+                                Dodiman Takimpo
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="calendar-outline"></ion-icon>
+                                Semester Ganjil 2026
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="people-outline"></ion-icon>
+                                35 Mahasiswa
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div>
+                    <a
+                        href="#"
+                        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg"
+                    >
+                        <ion-icon name="settings-outline"></ion-icon>
+                        Kelola Kelas
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================
+         Statistik
+    ====================================== -->
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+        <div class="bg-white rounded-xl shadow border p-6">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-gray-500 text-sm">
+                        Materi
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2">
+                        12
+                    </h2>
+
+                </div>
+
+                <ion-icon
+                    name="book-outline"
+                    class="text-4xl text-blue-500"
+                ></ion-icon>
+
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow border p-6">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-gray-500 text-sm">
+                        Tugas
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2">
+                        8
+                    </h2>
+
+                </div>
+
+                <ion-icon
+                    name="document-text-outline"
+                    class="text-4xl text-green-500"
+                ></ion-icon>
+
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow border p-6">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-gray-500 text-sm">
+                        Pengumuman
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2">
+                        5
+                    </h2>
+
+                </div>
+
+                <ion-icon
+                    name="megaphone-outline"
+                    class="text-4xl text-orange-500"
+                ></ion-icon>
+
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-xl shadow border p-6">
+
+            <div class="flex justify-between">
+
+                <div>
+
+                    <p class="text-gray-500 text-sm">
+                        Mahasiswa
+                    </p>
+
+                    <h2 class="text-3xl font-bold mt-2">
+                        35
+                    </h2>
+
+                </div>
+
+                <ion-icon
+                    name="people-outline"
+                    class="text-4xl text-purple-500"
+                ></ion-icon>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================
+         Menu
+    ====================================== -->
+    <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+        <!-- ---------- Materi ---------- -->
+        <a href="#" class="bg-white rounded-xl shadow border p-6 hover:shadow-lg transition">
+
+            <ion-icon
+                name="book-outline"
+                class="text-4xl text-blue-600"
+            ></ion-icon>
+
+            <h3 class="font-semibold text-lg mt-4">
+                Materi
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Lihat seluruh materi perkuliahan.
+            </p>
+
+        </a>
+
+        <!-- ---------- Tugas ---------- -->
+        <a @click.prevent="$dispatch('open-daftar-tugas')" href="" class="bg-white rounded-xl shadow border p-6 hover:shadow-lg transition">
+
+            <ion-icon
+                name="document-text-outline"
+                class="text-4xl text-green-600"
+            ></ion-icon>
+
+            <h3 class="font-semibold text-lg mt-4">
+                Tugas
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Daftar tugas dan pengumpulan.
+            </p>
+
+        </a>
+
+        <!-- ---------- Mahasiswa ---------- -->
+        <a href="#" class="bg-white rounded-xl shadow border p-6 hover:shadow-lg transition">
+
+            <ion-icon
+                name="people-outline"
+                class="text-4xl text-purple-600"
+            ></ion-icon>
+
+            <h3 class="font-semibold text-lg mt-4">
+                Mahasiswa
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Daftar peserta kelas.
+            </p>
+
+        </a>
+
+        <!-- ---------- Pengumuman ---------- -->
+        <a href="#" class="bg-white rounded-xl shadow border p-6 hover:shadow-lg transition">
+
+            <ion-icon
+                name="megaphone-outline"
+                class="text-4xl text-orange-600"
+            ></ion-icon>
+
+            <h3 class="font-semibold text-lg mt-4">
+                Pengumuman
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Lihat pengumuman kelas.
+            </p>
+
+        </a>
+
+    </div>
+
+</div>

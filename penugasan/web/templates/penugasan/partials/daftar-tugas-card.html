@@ -1,0 +1,178 @@
+<div x-data="{ filter: 'all' }" class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">
+                <span>Mata Kuliah</span>
+            </h1>
+
+            <p class="text-gray-500 mt-1">
+                Daftar seluruh tugas pada mata kuliah ini.
+            </p>
+        </div>
+
+        <!-- Filter -->
+        <div class="flex gap-2">
+
+            <button
+                @click="filter='all'"
+                :class="filter=='all'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-gray-700 border'"
+                class="px-4 py-2 rounded-lg transition"
+            >
+                Semua
+            </button>
+
+            <button
+                @click="filter='pending'"
+                :class="filter=='pending'
+                    ? 'bg-amber-500 text-white'
+                    : 'bg-white text-gray-700 border'"
+                class="px-4 py-2 rounded-lg transition"
+            >
+                Belum
+            </button>
+
+            <button
+                @click="filter='done'"
+                :class="filter=='done'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-white text-gray-700 border'"
+                class="px-4 py-2 rounded-lg transition"
+            >
+                Sudah
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Grid -->
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+        <!-- Card -->
+        <div
+            x-show="filter=='all' || filter=='pending'"
+            class="bg-white rounded-xl shadow border border-gray-200 hover:shadow-lg transition"
+        >
+
+            <div class="p-6">
+
+                <div class="flex justify-between items-start">
+
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        Tugas 1
+                    </h2>
+
+                    <span
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-medium"
+                    >
+                        <ion-icon name="time-outline"></ion-icon>
+                        Belum
+                    </span>
+
+                </div>
+
+                <p class="text-gray-600 mt-3 line-clamp-3">
+                    Membuat aplikasi CRUD menggunakan Django dan Tailwind CSS.
+                </p>
+
+                <div class="mt-6 space-y-3">
+
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        Deadline:
+                        <span class="font-medium text-gray-700">
+                            30 Juli 2026
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <ion-icon name="book-outline"></ion-icon>
+                        Pemrograman Web
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="border-t p-4 flex justify-end">
+
+                <a
+                    href="#"
+                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+                >
+                    <ion-icon name="eye-outline"></ion-icon>
+                    Detail
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Card -->
+        <div
+            x-show="filter=='all' || filter=='done'"
+            class="bg-white rounded-xl shadow border border-gray-200 hover:shadow-lg transition"
+        >
+
+            <div class="p-6">
+
+                <div class="flex justify-between items-start">
+
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        Tugas 2
+                    </h2>
+
+                    <span
+                        class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium"
+                    >
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        Sudah
+                    </span>
+
+                </div>
+
+                <p class="text-gray-600 mt-3 line-clamp-3">
+                    Implementasikan autentikasi Login dan Register.
+                </p>
+
+                <div class="mt-6 space-y-3">
+
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        Deadline:
+                        <span class="font-medium text-gray-700">
+                            20 Juli 2026
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <ion-icon name="book-outline"></ion-icon>
+                        Pemrograman Web
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="border-t p-4 flex justify-end">
+
+                <a
+                    href="#"
+                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+                >
+                    <ion-icon name="eye-outline"></ion-icon>
+                    Detail
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

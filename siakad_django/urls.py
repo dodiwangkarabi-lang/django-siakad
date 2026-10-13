@@ -18,11 +18,62 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
+
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+    SpectacularRedocView,
+)
+
+
 urlpatterns = [
+    path(
+        "api/schema/",
+        SpectacularAPIView.as_view(),
+        name="schema",
+    ),
+
+    path(
+        "api/docs/",
+        SpectacularSwaggerView.as_view(
+            url_name="schema"
+        ),
+        name="swagger-ui",
+    ),
+
+    path(
+        "api/redoc/",
+        SpectacularRedocView.as_view(
+            url_name="schema"
+        ),
+        name="redoc",
+    ),
+    
+    # accounts
+    path("api/auth/", include("accounts.auth.api.urls", namespace="auth_api")),
+    
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("academic/", include("academic.urls")),
+    path("", include("academic.academic_urls", namespace="academic")),
     path("api/", include("core.api.urls", namespace="api")),
     path("", include("core.urls", namespace="core")),
+    path("", include("penugasan.urls", namespace="penugasan")),
     # path("assessment/", include("assessment.urls")),
+    path("", include("accounts.web.urls", namespace="accounts_web")),
+    path("api/kelas/", include("academic.api.kelas.urls", namespace="kelas_api")),
 ]
+
+# media
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

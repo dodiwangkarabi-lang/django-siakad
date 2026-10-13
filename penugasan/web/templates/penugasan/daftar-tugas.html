@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="p-6" x-data="daftar_tugas_page()" x-init="initialData()">
+    {% include "penugasan/partials/daftar-tugas-card.html" %}
+</div>
+{% endblock content %}
+
+{% block script %}
+
+<script>
+    function daftar_tugas_page() {
+        return {
+            loading: false,
+
+            async initialData() {
+                window.alart('oke');
+                try {
+                    const res = axios.get("");
+                }
+                catch(errors) {
+                    console.log("error");
+                    console.log(errors);
+                }
+            }
+
+        }
+    }
+</script>
+{% endblock script %}

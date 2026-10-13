@@ -11,6 +11,10 @@ router.register("prodi", views.ProdiView)
 router.register("fakultas", views.FakultasView)
 
 urlpatterns = [
+    # krs api
+    path("api/krs/", include("academic.krs.api.urls", namespace="academic_krs_api")),
+    
     path("api/detail/", views.DetailKRSAPIView.as_view(), name="index"),
     path("api/", include(router.urls)),
+    
 ]

@@ -14,7 +14,7 @@ from academic.helpers.helpers import bulk_krs
 
 from academic.usecases import IsiKRS
 from academic.services import (
-    DetailKRS, DetailKRSService, KelasService, KRSService,
+    DetailKRSService, KelasService, KRSService,
     MataKuliahService
 )
 from accounts.services import (

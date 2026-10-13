@@ -1,6 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class TandaTangan(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    nama = models.CharField(max_length=100, null=True, blank=True)
+    tanda_tangan = models.FileField(upload_to='tanda_tangan/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"{self.id} - {self.user.username}"
+
 class BaseModel(models.Model):
     JENIS_KELAMIN = (
         ("Laki-laki", "Laki-laki"),
@@ -37,7 +47,7 @@ class Mahasiswa(BaseModel):
     prodi = models.ForeignKey('academic.Prodi', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
-        return f"{self.nama} - {self.nim}"
+        return f"{self.nama} - {self.nim} - {self.id}"
 
 class Dosen(BaseModel):
     nip = models.CharField(max_length=10, null=True, blank=True, unique=True)

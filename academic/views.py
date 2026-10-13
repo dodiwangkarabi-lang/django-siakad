@@ -10,33 +10,55 @@ from rest_framework.viewsets import ModelViewSet
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_spectacular.utils import extend_schema
 
+# uath restframework
+from rest_framework.permissions import IsAuthenticated
 from collections import defaultdict
 
+# ----- serializer -----
+from academic.krs.api.serializers import (
+    DetailKRSResponseSerializer
+)
+
 class FakultasView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = Fakultas.objects.all()
     serializer_class = FakultasSerializer
     
 class ProdiView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = Prodi.objects.all()
     serializer_class = ProdiSerializer
     
 class MataKuliahView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = MataKuliah.objects.all()
     serializer_class = MataKuliahSerializer
     
 class KelasView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = Kelas.objects.all()
     serializer_class = KelasSerializer
     
 class DetailKRSView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = DetailKRS.objects.all()
     serializer_class = DetailKRSSerializer
     
 class KRSView(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    
     queryset = KRS.objects.all()
     serializer_class = KRSSerializer
     
+
+@extend_schema(tags=["KRS"], responses=DetailKRSResponseSerializer)
 class DetailKRSAPIView(APIView):
 
     def get(self, request):

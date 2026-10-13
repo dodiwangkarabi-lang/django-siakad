@@ -1,0 +1,7 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="p-6" x-data="daftar_tugas_page()" x-init="initialData()">
+    {% include "penugasan/partials/pengumpulan-tugas-table.html" %}
+</div>
+{% endblock content %}

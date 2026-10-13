@@ -1,0 +1,30 @@
+<script>
+  function buildUrl(pattern, params = {}) {
+    let url = pattern;
+
+    // Ganti placeholder angka dummy (0, 1, dst.) sesuai urutan
+    Object.values(params).forEach((value) => {
+      url = url.replace(/\/\d+(?=\/|$)/, `/${value}`);
+    });
+
+    return url;
+  }
+
+  /* contoh penggunaan
+    buildUrl(window.APP.urls.login);
+
+    buildUrl(window.APP.urls.users.detail, {
+        id: 15
+    });
+
+  */
+
+
+
+  // pattern
+  window.APP = {
+    urls: {
+        login: "{% url 'accounts_web:login' %}",
+    },
+  };
+</script>
