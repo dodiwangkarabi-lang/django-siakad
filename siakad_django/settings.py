@@ -31,10 +31,7 @@ ALLOWED_HOSTS = ["*"]
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://10.15.231.80:5173",
-    "http://10.118.66.80:5173",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "https://pasarwajododi.pythonanywhere.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -147,7 +144,9 @@ DATETIME_FORMAT = "d-m-Y H:i:s"
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
