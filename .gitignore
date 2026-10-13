@@ -4,8 +4,7 @@ db.sqlite3
 .env
 venv/
 .env.*
-staticfiles/
-media/
+
 cache/
 urls.txt
 tests/
