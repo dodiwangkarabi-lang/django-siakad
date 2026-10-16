@@ -27,13 +27,13 @@ SECRET_KEY = "django-insecure-t=)3c6^6$racj^os+a)u)et2t$2xe2ho@z_s)=fd*)1lq3d424
 DEBUG = True
 
 
-"http://127.0.0.1:5173"
 
 ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOW_ALL_ORIGINS = False
 
 
+# "http://127.0.0.1:5173",
 CORS_ALLOWED_ORIGINS = [
     "https://pasarwajododi.pythonanywhere.com",
 ]

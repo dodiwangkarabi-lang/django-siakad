@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% comment %}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- ionicon -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    {% endcomment %} {% comment %} react {% endcomment %} 
+    {% include "partials/reactHead.html" %}
+
+    <title>Detail KRS</title>
+  </head>
+  <body class="bg-white min-h-screen p-6">
+    <div id="root"></div>
+
+
+    <script>
+        window.APP_CONFIG = {
+          feature: "kelolaKRS",
+      };
+      </script>
+
+    
+  </body>
+</html>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    {% comment %}
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script
@@ -24,26 +25,16 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
-
-    {% comment %} react {% endcomment %}
-
-    {% load static %}
-
-    {% load static %}
-
-<script type="module" crossorigin src="{% static 'react/assets/index-CdWrH5pa.js' %}"></script>
-
-<link rel="modulepreload" crossorigin href="{% static 'react/assets/p-CHqRYvYm-BJb0RDtG.js' %}">
-<link rel="modulepreload" crossorigin href="{% static 'react/assets/p-ZjP4CjeZ-DJ1DGIsW.js' %}">
-
-<link rel="stylesheet" crossorigin href="{% static 'react/assets/index-DLTP8cAR.css' %}">
-
-    
+    {% endcomment %} {% comment %} react {% endcomment %} 
+    {% include "partials/reactHead.html" %}
 
     <title>Detail KRS</title>
   </head>
   <body class="bg-white min-h-screen p-6">
     <div id="root"></div>
+
+
+    
 
     
   </body>

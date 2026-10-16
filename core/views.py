@@ -33,6 +33,9 @@ def index(request):
 def kelas(request):
     return render(request, 'features/krs/pages/kelas.html')
 
+def kelola_krs(request):
+    return render(request, 'features/krs/pages/kelola-krs.html')
+
 @login_required
 def gabung_kelas(request):
     form = FormGabungKelas()
