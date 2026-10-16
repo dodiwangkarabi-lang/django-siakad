@@ -18,7 +18,20 @@ class MeAPIView(APIView):
     @extend_schema(tags=["Auth"], summary="Me")
     def get(self, request):
         
-        profile_serializer = serializers.ProfileMahasiswa(request.user.mahasiswa)
+        user = request.user
+        if hasattr(user, "mahasiswa"):
+            profile = serializers.ProfileMahasiswa(
+                user.mahasiswa
+            ).data
+
+        elif hasattr(user, "dosen"):
+            profile = serializers.ProfileDosen(
+                user.dosen
+            ).data
+
+        else:
+            profile = None
+        # profile_serializer = serializers.ProfileMahasiswa(user.mahasiswa)
         
         return Response({
             "is_success": True,
@@ -26,7 +39,8 @@ class MeAPIView(APIView):
                 "id": request.user.id,
                 "username": request.user.username,
                 "role": roles.get_role(request),
-                "profile": profile_serializer.data
+                "profile": profile
+                # "profile": profile_serializer.data
             }
         }, status=status.HTTP_200_OK)
 
