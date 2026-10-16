@@ -249,7 +249,8 @@ class CetakKRSAPIView(APIView):
             "TTD_NAMA": f"{krs.mahasiswa.nama}",
             "TTD_NIM": f"{krs.mahasiswa.nim}",
             "JUMLAH_SKS": f"{total_sks}",
-            "TANGGAL_PENGISIAN": f"{timezone.now().strftime('%d-%m-%Y')}",
+            # "TANGGAL_PENGISIAN": f"{timezone.now().strftime('%d-%m-%Y')}",
+            "TANGGAL_PENGISIAN": f"Sabtu, 10 Oktober 2026",
             "TTD_MAHASISWA": tanda_tangan_img.tanda_tangan.path,
         }
         cetak_svc.set_data_input(DATA_INPUT)
