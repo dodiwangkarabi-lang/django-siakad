@@ -11,8 +11,9 @@ router.register("prodi", views.ProdiView)
 router.register("fakultas", views.FakultasView)
 
 urlpatterns = [
-    # krs api
+    # sub apps
     path("api/krs/", include("academic.krs.api.urls", namespace="academic_krs_api")),
+    path("api/kelola-kelas/", include("academic.kelola_kelas.api.urls", namespace="academic_kelola_kelas_api")),
     
     path("api/detail/", views.DetailKRSAPIView.as_view(), name="index"),
     path("api/", include(router.urls)),

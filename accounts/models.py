@@ -53,4 +53,4 @@ class Dosen(BaseModel):
     nip = models.CharField(max_length=10, null=True, blank=True, unique=True)
 
     def __str__(self):
-        return f"{self.nama} - {self.nip}"
+        return f"{self.id} {self.nama} - {self.nip}"

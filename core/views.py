@@ -36,6 +36,9 @@ def kelas(request):
 def kelola_krs(request):
     return render(request, 'features/krs/pages/kelola-krs.html')
 
+def kelola_jadwal(request):
+    return render(request, 'features/krs/pages/kelola-jadwal.html')
+
 @login_required
 def gabung_kelas(request):
     form = FormGabungKelas()

@@ -8,6 +8,7 @@ urlpatterns = [
     path("krs/", views.krs, name="krs"),
     path("kelas/", views.kelas, name="kelas"),
     path("kelola-krs/", views.kelola_krs, name="kelola_krs"),
+    path("kelola-jadwal/", views.kelola_jadwal, name="kelola_jadwal"),
     path("gabung-kelas/", views.gabung_kelas, name="gabung_kelas"),
     path("", views.index, name="index"),
 ]

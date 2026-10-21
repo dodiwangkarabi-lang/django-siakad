@@ -32,6 +32,11 @@ ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOW_ALL_ORIGINS = False
 
+# di django
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:8000",
+# ]
+
 # CORS_ALLOWED_ORIGINS = [
 #     "http://127.0.0.1:5173",
 #     "http://172.31.96.80:5173",
