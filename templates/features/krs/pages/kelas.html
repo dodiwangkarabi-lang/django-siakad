@@ -28,13 +28,17 @@
     {% endcomment %} {% comment %} react {% endcomment %} 
     {% include "partials/reactHead.html" %}
 
-    <title>Detail KRS</title>
+    <title>MyApp</title>
   </head>
   <body class="bg-white min-h-screen p-6">
     <div id="root"></div>
 
 
-    
+    <script>
+        window.APP_CONFIG = {
+          feature: "lihatDaftarKRS",
+      };
+      </script>
     
     
   </body>
