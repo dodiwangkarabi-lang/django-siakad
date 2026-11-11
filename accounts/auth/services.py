@@ -37,7 +37,7 @@ class AuthService:
             httponly=True, 
             secure=False,  # true untuk https (productions)
             samesite="Lax",
-            max_age=15 * 60
+            max_age=120 * 60
         )
         
         response.set_cookie(

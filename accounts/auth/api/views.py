@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # from rest_framework_simplejwt.tokens import RefreshToken    
 
@@ -13,6 +13,17 @@ from accounts.auth.utils import roles
 from .. import services
 from . import serializers
 
+class GetRoleAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    @extend_schema(tags=["Auth"], summary="Me")
+    def get(self, request):
+        return Response({
+            "is_success": True,
+            "data": {
+                "role": roles.get_role(request)
+            }
+        })
 class MeAPIView(APIView):
     permission_classes = [IsAuthenticated]
     @extend_schema(tags=["Auth"], summary="Me")
@@ -45,12 +56,14 @@ class MeAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
 class LoginAPIView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
     @extend_schema(
         tags=["Auth"], summary="Login",
         request=serializers.LoginRequestSerializer
     )
     def post(self, request):
-        
+        # print("auth jalan")
         serializer = serializers.LoginRequestSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)

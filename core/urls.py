@@ -6,6 +6,7 @@ app_name = "core"
 urlpatterns = [
     path("submit-krs/", views.submit_krs, name="submit_krs"),
     path("krs/", views.krs, name="krs"),
+    path("perkuliahan/", views.perkuliahan, name="perkuliahan"),
     path("kelas/", views.kelas, name="kelas"),
     path("kelola-krs/", views.kelola_krs, name="kelola_krs"),
     path("kelola-jadwal/", views.kelola_jadwal, name="kelola_jadwal"),

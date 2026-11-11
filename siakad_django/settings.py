@@ -37,8 +37,9 @@ CORS_ALLOW_ALL_ORIGINS = False
 #     "http://127.0.0.1:5173",
 # ]
 
+# "http://10.255.71.80:5173",
 # CORS_ALLOWED_ORIGINS = [
-#     "http://10.180.71.80:5173",
+#     "http://10.129.100.80:5173",
 # ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "academic",
+    "perkuliahan",
     "accounts",
     "assessment",
     "shared",
@@ -192,7 +194,7 @@ SPECTACULAR_SETTINGS = {
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,

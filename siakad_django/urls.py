@@ -70,6 +70,8 @@ urlpatterns = [
     # path("assessment/", include("assessment.urls")),
     path("", include("accounts.web.urls", namespace="accounts_web")),
     path("api/kelas/", include("academic.api.kelas.urls", namespace="kelas_api")),
+    
+    path("api/perkuliahan/", include("perkuliahan.api.urls", namespace="perkuliahan_api")),
 ]
 
 # media
