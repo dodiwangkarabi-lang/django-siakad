@@ -180,6 +180,150 @@ class KehadiranRules:
 class NilaiService:
     
     @staticmethod
+    def nilai_tugas_dari_file_excel(*, user, tugas_id: int, data: dto.NilaiTugasByExcelFileDTO) -> Result:
+        try:
+            AkunRules.is_dosen(user)
+        except:
+            return Result(is_success=False, errors={"non_field_errors": ["User bukan dosen"]})
+        
+        try:
+            tugas = TugasRules.tugas_valid(tugas_id)
+        except:
+            return Result(is_success=False, errors={"non_field_errors": ["Tugas tidak ditemukan"]})
+
+        # data_input = {
+        #     "tugas_id": data.tugas_id,
+        #     "nama_kelas": data.sheet_name
+        # }
+        
+        import pandas as pd
+        
+        df_tugas = pd.read_excel(data.excel_file, sheet_name=data.sheet_name)
+        def tidak_sama_dengan_nol(x):
+            return x > 0
+        filtered = df_tugas['nilai'] > 0
+        kolom = ['NIM', 'Nama', 'nilai']
+        df = df_tugas[filtered][kolom]
+
+        # tugas = Tugas.objects.get(id=data_input["tugas_id"])
+
+        rows = list(df.itertuples())
+
+        # 1. Ambil seluruh mahasiswa
+        nims = [str(row.NIM) for row in rows]
+        mahasiswa_map = {
+            m.nim: m
+            for m in Mahasiswa.objects.filter(nim__in=nims)
+        }
+
+        # print(mahasiswa_map)
+
+        # 2. Validasi mahasiswa
+        nim_tidak_ditemukan = set(nims) - set(mahasiswa_map.keys())
+
+        if nim_tidak_ditemukan:
+            raise ValueError(
+                f"NIM tidak ditemukan: {', '.join(nim_tidak_ditemukan)}"
+            )
+
+        # 3. Ambil KumpulTugas yang sudah ada
+        kumpul_map = {
+            k.mahasiswa.nim: k
+            for k in KumpulTugas.objects.filter(
+                tugas=tugas,
+                mahasiswa__nim__in=nims
+            ).select_related("mahasiswa")
+        }
+
+        # 4. Pisahkan KumpulTugas baru
+        kumpul_baru = []
+        kumpul_update = []
+
+        for row in rows:
+            nim = str(row.NIM)
+
+            kumpul = kumpul_map.get(nim)
+
+            if kumpul:
+                # Update jika sudah ada
+                kumpul.url = "-"
+                kumpul.keterangan = "-"
+                kumpul_update.append(kumpul)
+
+            else:
+                # Create jika belum ada
+                kumpul_baru.append(
+                    KumpulTugas(
+                        tugas=tugas,
+                        mahasiswa=mahasiswa_map[nim],
+                        url="-",
+                        keterangan="-"
+                    )
+                )
+
+        with transaction.atomic():
+
+            # 5. Simpan KumpulTugas baru
+            # Create
+            KumpulTugas.objects.bulk_create(kumpul_baru)
+
+            # Update
+            KumpulTugas.objects.bulk_update(
+                kumpul_update,
+                fields=["url", "keterangan"]
+            )
+
+            # 6. Gabungkan KumpulTugas baru
+            for kumpul in kumpul_baru:
+                kumpul_map[kumpul.mahasiswa.nim] = kumpul
+
+            # 7. Ambil Nilai yang sudah ada
+            kumpul_ids = [k.id for k in kumpul_map.values()]
+
+            nilai_map = {
+                n.kumpul_tugas_id: n
+                for n in Nilai.objects.filter(
+                    kumpul_tugas_id__in=kumpul_ids
+                )
+            }
+
+            nilai_baru = []
+            nilai_update = []
+
+            # 8. Pisahkan Nilai baru dan update
+            for row in rows:
+                nim = str(row.NIM)
+                kumpul = kumpul_map[nim]
+
+                nilai = nilai_map.get(kumpul.id)
+
+                if nilai:
+                    nilai.nilai = row.nilai
+                    nilai_update.append(nilai)
+                else:
+                    nilai_baru.append(
+                        Nilai(
+                            nilai=row.nilai,
+                            kumpul_tugas=kumpul,
+                            catatan="Nilai dari excel"
+                        )
+                    )
+
+            # 9. Simpan Nilai baru
+            Nilai.objects.bulk_create(nilai_baru)
+
+            # 10. Update Nilai lama
+            Nilai.objects.bulk_update(
+                nilai_update,
+                fields=["nilai"]
+            )
+            
+            return Result(is_success=True, messages="Nilai berhasil disimpan")
+        
+        return Result(is_success=False, messages="Nilai tidak berhasil disimpan")
+        
+    
+    @staticmethod
     def lihat_nilai_tugas(*, user, kelas_id: int) -> Result:
         try:
             kelas = KelasService.kelas_valid(kelas_id)

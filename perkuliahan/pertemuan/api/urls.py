@@ -6,6 +6,7 @@ from . import views
 
 urlpatterns = [
     path("kelas-semua/", views.KelasAPIView.as_view(), name="kelas_semua"),
+    path("tugas/<int:tugas_id>/nilai-tugas-by-excel/", views.NilaiTugasByExcelFileAPIView.as_view(), name="nilai_tugas_by_excel_file"),
     path("<int:kumpul_tugas_id>/nilai-tugas/", views.PertemuanNilaiTugasAPIView.as_view(), name="pertemuan_nilai_tugas"),
     path("<int:kumpul_tugas_id>/hapus-tugas-dikumpul/", views.PertemuanHapusTugasDikumpulAPIView.as_view(), name="pertemuan_hapus_tugas_dikumpul"),
     path("<pertemuan_id>/is-mahasiswa-sudah-isi-kehadiran/", views.IsMahasiswaSudahIsiKehadiran.as_view(), name="is_mahasiswa_sudah_isi_kehadiran"),

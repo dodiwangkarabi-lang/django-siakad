@@ -136,3 +136,7 @@ class KumpulanTugasSerializer(serializers.ModelSerializer):
     class Meta:
         model = KumpulTugas
         fields = '__all__'
+        
+class NilaiTugasByExcelFileSerializer(serializers.Serializer):
+    sheet_name = serializers.CharField()
+    excel_file = serializers.FileField()

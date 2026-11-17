@@ -12,6 +12,28 @@ from accounts.auth.permission import (
     IsDosen, IsTU, IsMahasiswa
 )
 
+class NilaiTugasByExcelFileAPIView(APIView):
+    permission_classes = [IsAuthenticated, IsDosen]
+    
+    def post(self, request, tugas_id: int):
+        
+        ser = serializers.NilaiTugasByExcelFileSerializer(data=request.data)
+        if not ser.is_valid():
+            return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
+        validated_data = ser.validated_data
+        data_dto = dto.NilaiTugasByExcelFileDTO(
+            sheet_name=validated_data['sheet_name'],
+            excel_file=validated_data['excel_file']
+        )
+        svc = services.NilaiService()
+        result = svc.nilai_tugas_dari_file_excel(user=request.user, tugas_id=tugas_id, data=data_dto)
+        if not result.is_success:
+            return Response(result.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(data={
+            "messages": result.messages
+        }, status=status.HTTP_200_OK)
+
 class DaftarHadirPerluKonfirmasiAPIView(APIView):
     permission_classes = [IsAuthenticated, IsDosen]
     

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from enum import StrEnum
+import io
 
 class StatusKehadiran(StrEnum):
     HADIR = "hadir"
@@ -79,3 +80,9 @@ class EditTugasDTO:
     by_kehadiran: bool
     nama: str | None = None
     url: str | None = None
+    
+@dataclass(frozen=True)
+class NilaiTugasByExcelFileDTO:
+    # tugas_id: int
+    excel_file: io.BytesIO
+    sheet_name: str
