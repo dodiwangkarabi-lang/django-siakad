@@ -37,7 +37,6 @@ CORS_ALLOW_ALL_ORIGINS = False
 #     "http://127.0.0.1:5173",
 # ]
 
-# "http://10.255.71.80:5173",
 # CORS_ALLOWED_ORIGINS = [
 #     "http://10.176.211.80:5173",
 # ]
