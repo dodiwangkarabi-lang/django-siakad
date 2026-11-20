@@ -661,6 +661,13 @@ class TugasService:
         return Result(is_success=True, data=tugas, messages="Tugas berhasil diubah")
     
     @staticmethod
+    def tugas_detail(*, tugas_id) -> Result:
+        tugas = Tugas.objects.filter(id=tugas_id).first()
+        if not tugas:
+            return Result(is_success=False, errors={"non_field_errors": ["Tugas tidak ditemukan"]})
+        return Result(is_success=True, data=tugas, messages="Tugas Detail")
+    
+    @staticmethod
     def kumpulan_tugas_mahasiswa(*, tugas_id:int) -> Result:
         qs = (
             KumpulTugas.objects

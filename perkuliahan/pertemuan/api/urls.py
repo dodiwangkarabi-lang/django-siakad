@@ -36,5 +36,6 @@ urlpatterns = [
     path("<kehadiran_id>/verifikasi-kehadiran/", views.PertemuanVerifikasiKehadiranAPIView.as_view(), name="pertemuan_verifikasi_kehadiran"),
     path("<pertemuan_id>/verifikasi-banyak-kehadiran/", views.PertemuanVerifikasiBanyakKehadiranAPIView.as_view(), name="pertemuan_verifikasi_banyak_kehadiran"),
     path("tugas/<tugas_id>/", views.PertemuanTugasDetailAPIView.as_view(), name="pertemuan_tugas_detail"),
+    path("tugas/<tugas_id>/detail/", views.TugasDetailAPIView.as_view(), name="tugas_detail_get"),
     path("tugas/<tugas_id>/kumpulan-tugas-mahasiswa/", views.KumpulanTugasMahasiswaAPIView.as_view(), name="kumpulan_tugas_mahasiswa"),
 ]

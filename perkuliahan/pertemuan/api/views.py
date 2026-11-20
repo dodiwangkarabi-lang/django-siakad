@@ -164,6 +164,15 @@ class PertemuanHapusTugasMahasiswaAPIView(APIView):
 class TugasDetailAPIView(APIView):
     permission_classes = [IsAuthenticated, IsDosen]
     
+    def get(self, request, tugas_id):
+        svc = services.TugasService()
+        hasil = svc.tugas_detail(tugas_id=tugas_id)
+        if not hasil.is_success:
+            return Response({"messages": "tidak ditemukan"}, status=status.HTTP_400_BAD_REQUEST)
+        tugas_obj = hasil.data
+        ser = serializers.TugasDetailSerializer(instance=tugas_obj)
+        return Response(data=ser.data, status=status.HTTP_200_OK)
+    
     def post(self, request, tugas_id):
         data = request.data
         ser = serializers.TugasEditSerializer(data=data)

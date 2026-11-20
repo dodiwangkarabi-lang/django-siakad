@@ -65,6 +65,12 @@ class TugasSerializer(serializers.ModelSerializer):
         fields = '__all__'
         # exclude=['pertemuan']
         
+class TugasDetailSerializer(serializers.ModelSerializer):
+    pertemuan = PertemuanOnlySerializer()
+    class Meta:
+        model = Tugas
+        fields = "__all__"
+        
 class IsiKehadiranSerializer(serializers.Serializer):
     status_kehadiran = serializers.ChoiceField(
         choices=StatusKehadiran.choices
